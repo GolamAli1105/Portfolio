@@ -30,7 +30,7 @@ export default function Skills() {
         const velocity = Math.abs(self.getVelocity());
         // Map velocity (0 - ~3000) to timeScale (1 - 10)
         let timeScale = 1 + (velocity / 500);
-        if (timeScale > 10) timeScale = 10; // Cap max speed
+        if (timeScale > 3) timeScale = 3; // Cap max speed
         
         gsap.to(marqueeAnim, {
           timeScale: timeScale,
@@ -52,10 +52,10 @@ export default function Skills() {
     const tags = gsap.utils.toArray('.floating-skill');
     tags.forEach((tag, i) => {
       gsap.to(tag, {
-        y: 'random(-20, 20)',
-        x: 'random(-20, 20)',
-        rotation: 'random(-10, 10)',
-        duration: 'random(2, 4)',
+        y: 'random(-10, 10)',
+        x: 'random(-10, 10)',
+        rotation: 'random(-5, 5)',
+        duration: 'random(4, 6)',
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,

@@ -3,10 +3,12 @@ import { gsap } from 'gsap';
 
 export default function CustomCursor() {
   const dotRef = useRef(null);
+  const ringRef = useRef(null);
   
   // Track mouse position and cursor position separately for lerping
-  const mouse = useRef({ x: 0, y: 0 });
-  const cursor = useRef({ x: 0, y: 0 });
+  const mouse = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const cursor = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  const ring = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
   
   // Ref for the currently hovered magnetic element
   const magneticTarget = useRef(null);
@@ -15,7 +17,8 @@ export default function CustomCursor() {
     if ('ontouchstart' in window) return;
 
     const dot = dotRef.current;
-    if (!dot) return;
+    const ringEl = ringRef.current;
+    if (!dot || !ringEl) return;
 
     const onMouseMove = (e) => {
       mouse.current.x = e.clientX;
@@ -26,6 +29,7 @@ export default function CustomCursor() {
       document.querySelectorAll('a, button, .marquee-text, .project-card').forEach((el) => {
         el.addEventListener('mouseenter', (e) => {
           dot.classList.add('hovering');
+          ringEl.classList.add('hovering');
           // If it's a link or button, make it magnetic
           if (el.tagName === 'A' || el.tagName === 'BUTTON' || el.classList.contains('nav-cta')) {
              magneticTarget.current = el;
@@ -34,6 +38,7 @@ export default function CustomCursor() {
         
         el.addEventListener('mouseleave', () => {
           dot.classList.remove('hovering');
+          ringEl.classList.remove('hovering');
           if (magneticTarget.current === el) {
             magneticTarget.current = null;
             // Reset the element's position using GSAP
@@ -66,12 +71,16 @@ export default function CustomCursor() {
         cursor.current.y += (centerY - cursor.current.y) * 0.2;
       } else {
         // Normal cursor follow
-        cursor.current.x += (mouse.current.x - cursor.current.x) * 0.15;
-        cursor.current.y += (mouse.current.y - cursor.current.y) * 0.15;
+        cursor.current.x += (mouse.current.x - cursor.current.x) * 0.2;
+        cursor.current.y += (mouse.current.y - cursor.current.y) * 0.2;
       }
+      
+      // Ring follows cursor with more delay (spring effect)
+      ring.current.x += (cursor.current.x - ring.current.x) * 0.08;
+      ring.current.y += (cursor.current.y - ring.current.y) * 0.08;
 
-      dot.style.left = `${cursor.current.x}px`;
-      dot.style.top = `${cursor.current.y}px`;
+      dot.style.transform = `translate3d(${cursor.current.x}px, ${cursor.current.y}px, 0) translate(-50%, -50%)`;
+      ringEl.style.transform = `translate3d(${ring.current.x}px, ${ring.current.y}px, 0) translate(-50%, -50%)`;
       
       animId = requestAnimationFrame(render);
     };
@@ -85,11 +94,14 @@ export default function CustomCursor() {
   }, []);
 
   return (
-    <div className="cursor-dot" ref={dotRef}>
-      <div style={{ position: 'absolute', top: '50%', left: '-10px', width: '8px', height: '1px', background: '#fff', transform: 'translateY(-50%)' }} />
-      <div style={{ position: 'absolute', top: '50%', right: '-10px', width: '8px', height: '1px', background: '#fff', transform: 'translateY(-50%)' }} />
-      <div style={{ position: 'absolute', top: '-10px', left: '50%', width: '1px', height: '8px', background: '#fff', transform: 'translateX(-50%)' }} />
-      <div style={{ position: 'absolute', bottom: '-10px', left: '50%', width: '1px', height: '8px', background: '#fff', transform: 'translateX(-50%)' }} />
-    </div>
+    <>
+      <div className="cursor-dot" ref={dotRef} style={{ top: 0, left: 0 }}>
+        <div style={{ position: 'absolute', top: '50%', left: '-10px', width: '8px', height: '1px', background: 'var(--accent)', transform: 'translateY(-50%)' }} />
+        <div style={{ position: 'absolute', top: '50%', right: '-10px', width: '8px', height: '1px', background: 'var(--accent)', transform: 'translateY(-50%)' }} />
+        <div style={{ position: 'absolute', top: '-10px', left: '50%', width: '1px', height: '8px', background: 'var(--accent)', transform: 'translateX(-50%)' }} />
+        <div style={{ position: 'absolute', bottom: '-10px', left: '50%', width: '1px', height: '8px', background: 'var(--accent)', transform: 'translateX(-50%)' }} />
+      </div>
+      <div className="cursor-ring" ref={ringRef} style={{ top: 0, left: 0 }}></div>
+    </>
   );
 }

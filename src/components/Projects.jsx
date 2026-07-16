@@ -8,8 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 const PROJECTS = [
   { id: '01', title: 'APEX ENGINE', tags: 'C++ / VULKAN / HLSL', desc: 'A custom rendering engine built from scratch. Features clustered forward shading, real-time raytraced reflections, and a multi-threaded job system.', img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000' },
   { id: '02', title: 'CYBER CORE', tags: 'UNREAL ENGINE 5 / BLUEPRINTS', desc: 'A cyberpunk stealth-action prototype. Implemented custom AI perception systems and complex procedural animation blending for seamless character traversal.', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000' },
-  { id: '03', title: 'NEBULA FX', tags: 'HLSL / NIAGARA / HOUDINI', desc: 'A library of AAA-quality visual effects. Developed proprietary shaders for volumetric clouds, explosive fluid simulations, and energy fields.', img: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&q=80&w=1000' },
-  { id: '04', title: 'VOID REALM', tags: 'UNITY / C# / DOTS', desc: 'A massive multiplayer stress-test pushing Unitys Data-Oriented Technology Stack to handle 10,000+ networked entities at 60fps on consumer hardware.', img: 'https://images.unsplash.com/photo-1604871000636-074fa5117945?auto=format&fit=crop&q=80&w=1000' },
+  { id: '03', title: 'NEBULA FX', tags: 'HLSL / NIAGARA / HOUDINI', desc: 'A library of high-quality visual effects. Developed shaders for volumetric clouds, explosive fluid simulations, and energy fields.', img: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&q=80&w=1000' },
+  { id: '04', title: 'VOID REALM', tags: 'UNITY / C# / DOTS', desc: 'A multiplayer prototype testing Unitys Data-Oriented Technology Stack to handle numerous networked entities efficiently.', img: 'https://images.unsplash.com/photo-1604871000636-074fa5117945?auto=format&fit=crop&q=80&w=1000' },
 ];
 
 function TiltImage({ src, alt }) {
@@ -60,22 +60,32 @@ export default function Projects() {
     
     // Calculate total width to scroll
     // (Number of items - 1) * 100vw
-    const totalScroll = (PROJECTS.length - 1) * window.innerWidth;
+    const sliderDistance = (PROJECTS.length - 1) * window.innerWidth;
+    const scrollDistance = sliderDistance * 0.5; // Requires 50% less vertical scrolling
+
+    const images = gsap.utils.toArray(containerRef.current.querySelectorAll('.project-image'));
+    gsap.set(images, { scale: 1.2, transformOrigin: 'center center' });
 
     let tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         pin: true,
         start: 'top top',
-        end: `+=${totalScroll}`,
+        end: `+=${scrollDistance}`,
         scrub: 1,
       }
     });
 
     tl.to(slider, {
-      x: -totalScroll,
+      x: -sliderDistance,
       ease: 'none'
-    });
+    }, 0);
+    
+    // Parallax effect on images
+    tl.to(images, {
+      xPercent: 15,
+      ease: 'none'
+    }, 0);
 
     return () => {
       ScrollTrigger.getAll().forEach(st => st.kill());

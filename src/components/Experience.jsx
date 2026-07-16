@@ -5,9 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const JOBS = [
-  { year: '2023 — PRESENT', title: 'Lead Engine Programmer', company: 'VOID GAMES', desc: 'Leading a team of 5 engineers building a custom C++ rendering engine for an unannounced AAA title. Architecting scalable multi-threaded systems and custom GLSL shaders.' },
-  { year: '2021 — 2023', title: 'Technical Artist', company: 'NEXUS STUDIOS', desc: 'Developed core rendering infrastructure and toolchains for a real-time multiplayer game. Reduced frame times by 4ms through aggressive shader optimization and asset pipeline improvements.' },
-  { year: '2019 — 2021', title: 'Gameplay Programmer', company: 'AGENCY X', desc: 'Built award-winning digital experiences in Unreal Engine 4. Specialized in complex character controllers and physics blending. Worked closely with design teams to push the boundaries of what is possible.' }
+  { year: '2023 — PRESENT', title: 'Junior Software Engineer', company: 'INNOVATIVE STARTUP', desc: 'Collaborating closely with developers and artists to optimize assets and build custom shaders. Rapidly prototyping visual effects and learning the ins and outs of real-time rendering pipelines.' }
 ];
 
 export default function Experience() {

@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const PARAGRAPH = "I architect rendering pipelines and interactive systems that push hardware to its limits. With a deep background in C++, Vulkan, and Unreal Engine, I build the technical foundations that allow artists to create immersive virtual worlds without compromising performance.";
+const PARAGRAPH = "I am a passionate Software Engineer focused on high-performance graphics and interactive systems. With 8 months of hands-on experience in a fast-paced startup, I am rapidly leveling up my skills in C++, Unreal Engine, and shader development to help build immersive virtual worlds.";
 
 export default function About() {
   const containerRef = useRef(null);

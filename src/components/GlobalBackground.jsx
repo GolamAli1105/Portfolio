@@ -78,10 +78,10 @@ export default function GlobalBackground() {
       const delta = Math.abs(newScrollY - scrollY);
       
       // Accelerate the grid when scrolling
-      targetSpeed = 0.05 + (delta * 0.005);
+      targetSpeed = 0.05 + (delta * 0.002);
       
       // Clamp speed
-      if (targetSpeed > 1.0) targetSpeed = 1.0;
+      if (targetSpeed > 0.3) targetSpeed = 0.3;
       
       scrollY = newScrollY;
       

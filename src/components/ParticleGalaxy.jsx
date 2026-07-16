@@ -34,8 +34,8 @@ export default function ParticleGalaxy() {
 
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
-    const insideColor = new THREE.Color('#818cf8');
-    const outsideColor = new THREE.Color('#a78bfa');
+    const insideColor = new THREE.Color('#00ffff');
+    const outsideColor = new THREE.Color('#ff00ff');
 
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
@@ -61,7 +61,7 @@ export default function ParticleGalaxy() {
     galaxyGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const galaxyMat = new THREE.PointsMaterial({
-      size: 2, sizeAttenuation: true, depthWrite: false,
+      size: 0.05, sizeAttenuation: true, depthWrite: false,
       blending: THREE.AdditiveBlending, vertexColors: true, transparent: true, opacity: 0.8,
     });
     const particles = new THREE.Points(galaxyGeo, galaxyMat);
@@ -86,7 +86,7 @@ export default function ParticleGalaxy() {
     starsGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
     starsGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
     const starsMat = new THREE.PointsMaterial({
-      size: 1.2, sizeAttenuation: true, depthWrite: false,
+      size: 0.03, sizeAttenuation: true, depthWrite: false,
       blending: THREE.AdditiveBlending, vertexColors: true, transparent: true, opacity: 0.6,
     });
     const stars = new THREE.Points(starsGeo, starsMat);
@@ -141,5 +141,5 @@ export default function ParticleGalaxy() {
     };
   }, []);
 
-  return <div className="hero__canvas" ref={containerRef} />;
+  return <div className="hero__canvas" ref={containerRef} style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -10, background: 'var(--bg-primary)' }} />;
 }

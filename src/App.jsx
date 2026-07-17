@@ -45,7 +45,6 @@ export default function App() {
             {/* AAA Post Processing (Softened) */}
             <EffectComposer disableNormalPass>
               <Bloom luminanceThreshold={0.5} mipmapBlur intensity={0.4} />
-              <ChromaticAberration offset={[0.001, 0.001]} />
             </EffectComposer>
           </Suspense>
         </Canvas>

@@ -83,7 +83,7 @@ export default function CharacterController() {
   return (
     <>
       {/* Native FPS Mouse Aiming (Reduced Sensitivity) */}
-      <PointerLockControls pointerSpeed={0.3} />
+      <PointerLockControls pointerSpeed={0.15} />
       
       {/* Player Physics Body */}
       <RigidBody 
